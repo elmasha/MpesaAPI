@@ -61,7 +61,7 @@ app.get('/stk', access ,(req,res)=>{
                     "Password": password,
                     "Timestamp": timeStamp,
                     "TransactionType": "CustomerPayBillOnline",
-                    "Amount": " 1",
+                    "Amount": "1",
                     "PartyA": "254746291229",
                     "PartyB": "174379",
                     "PhoneNumber": "254746291229",
@@ -152,6 +152,19 @@ app.post('/stk/query',access,(req,res)=>{
         })
 
 })
+
+
+
+app.post('/timeout_url', (req, resp) => {
+    console.log('.......... Timeout ..................')
+    console.log(req.body)
+})
+
+app.post('/result_url', (req, resp) => {
+    console.log('.......... Results..................')
+    console.log(req.body)
+})
+
 
 
 
