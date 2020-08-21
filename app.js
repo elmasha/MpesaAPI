@@ -33,14 +33,15 @@ app.get('/access_token',access,(req,res)=>{
 })
 
 ///----Stk Push ---//
-app.get('/stk', access ,(req,res)=>{
-
+app.post('/stk', access ,(req,res)=>{
 
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     let auth = "Bearer "+ req.access_token
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+    let _amout = req.Amount
+    let _phoneNumber = req.PhoneNumber
       
     const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
     const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
@@ -61,10 +62,10 @@ app.get('/stk', access ,(req,res)=>{
                     "Password": password,
                     "Timestamp": timeStamp,
                     "TransactionType": "CustomerPayBillOnline",
-                    "Amount": "1",
+                    "Amount": _amout,
                     "PartyA": "254746291229",
                     "PartyB": "174379",
-                    "PhoneNumber": "254746291229",
+                    "PhoneNumber": _phoneNumber,
                     "CallBackURL": "https://mpesamko.herokuapp.com/Callbacks",
                     "AccountReference": " Elmasha TEST",
                     "TransactionDesc": "Lipa na Mpesa"
@@ -78,10 +79,13 @@ app.get('/stk', access ,(req,res)=>{
 
                 console.log(error);
 
-            }
+            }else{
 
                 res.status(200).json(body)
+                console.log(body)
         
+            }
+               
 
         })
 
@@ -92,7 +96,8 @@ app.post('/Callbacks',(res,req)=>{
     
     console.log('.......... STK Callback ..................');
     
-    console.log((req.body))
+    res.status(200).json(body)
+    console.log(body)
 
     })
 
