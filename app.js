@@ -39,12 +39,11 @@ app.get('/stk', access ,(req,res)=>{
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     let auth = "Bearer "+ req.access_token
 
-    let dateNow = new Date();
-    const timestamp = dateNow.getFullYear() +" "+" "+dateNow.getMonth()+" "+" "+dateNow.getDate()
-    +" "+" "+ dateNow.getHours()+" "+" "+dateNow.getMinutes()+"i"+"i"+dateNow.getSeconds();
-
-    const password = new Buffer.from('174379' + 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'  +timestamp).toString('base64');
-
+    let _shortCode = '174379';
+    let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+      
+    const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
+    const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
 
     request(
         {
@@ -60,7 +59,7 @@ app.get('/stk', access ,(req,res)=>{
     
                     "BusinessShortCode": "174379",
                     "Password": password,
-                    "Timestamp": timestamp,
+                    "Timestamp": timeStamp,
                     "TransactionType": "CustomerPayBillOnline",
                     "Amount": " 1",
                     "PartyA": "254746291229",
@@ -88,12 +87,72 @@ app.get('/stk', access ,(req,res)=>{
 
 });
 
-app.get('/Callbacks',(res,req)=>{
+//-----Callback Url ----///
+app.post('/Callbacks',(req,res)=>{
+    
+    console.log('.......... STK Callback ..................');
+    
+    console.log((req.body))
 
-res.send(body)
+    })
 
+
+
+
+
+
+///----STK QUERY ---
+app.post('/stk/query',access,(req,res)=>{
+
+    checkoutRequestId='ws_CO_180820201459553317'
+
+    auth = "Bearer "+ req.access_token
+
+    let endpoint ='https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query'
+    const _shortCode = '174379'
+    const _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+    const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3)
+    const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64')
+    
+
+    request(
+        {
+            url:endpoint,
+            method:"POST",
+            headers:{
+                "Authorization": auth
+            },
+           
+        json:{
+    
+            'BusinessShortCode': _shortCode,
+            'Password': password,
+            'Timestamp': timeStamp,
+            'CheckoutRequestID': checkoutRequestId
+
+            }
+
+        },
+        function(error,response,body){
+
+            if(error){
+
+                console.log(error);
+
+            }else if(response == 404){
+
+                console.log("Error Something went wrong..")
+
+
+            }else{
+                res.status(200).json(body)
+                console.log(body)
+            }
+
+        })
 
 })
+
 
 
 ///-----B2c -----///
