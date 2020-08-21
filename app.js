@@ -8,7 +8,7 @@ const app = express();
 const apiCallFromRequest = require('./Request')
 const apiCallFromNode = require('./nodeCalls')
 
-var port = server.listen(process.env.PORT || 4334);
+var port = server.listen(process.env.PORT || 3000);
 
 
 
@@ -216,6 +216,7 @@ function access(res,req,next){
 app.listen(port,(error,live)=>{
 
 if(error){
+    
 
 
 }else{  
