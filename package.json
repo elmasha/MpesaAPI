@@ -1,0 +1,33 @@
+{
+  "name": "mpesaapi",
+  "version": "1.0.0",
+  "description": "mpesa daraja api",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elmasha/Mkoba_Mpesa.git"
+  },
+  "keywords": [
+    "mpesadarajaapi"
+  ],
+  "author": "Elmasha omondi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elmasha/Mkoba_Mpesa/issues"
+  },
+  "homepage": "https://github.com/elmasha/Mkoba_Mpesa#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.28",
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2"
+  },
+  "engines": {
+    "node":"13.8.0"
+  }
+  
+}
