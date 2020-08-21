@@ -7,7 +7,8 @@ const https = require('https');
 const app = express();
 const apiCallFromRequest = require('./Request')
 const apiCallFromNode = require('./nodeCalls')
-const port =process.env.PORT || 4334;
+
+var port = server.listen(process.env.PORT || 4334);
 
 
 
@@ -212,7 +213,7 @@ function access(res,req,next){
 
 
 //-- listen
-app.listen(4334,function(error,live){
+app.listen(port,(error,live)=>{
 
 if(error){
 
