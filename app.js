@@ -65,7 +65,7 @@ app.get('/stk', access ,(req,res)=>{
                     "PartyA": "254746291229",
                     "PartyB": "174379",
                     "PhoneNumber": "254746291229",
-                    "CallBackURL": "https://mpesamko.herokuapp.com//Callbacks",
+                    "CallBackURL": "https://mpesamko.herokuapp.com/Callbacks",
                     "AccountReference": " Elmasha TEST",
                     "TransactionDesc": "Lipa na Mpesa"
 
@@ -88,7 +88,7 @@ app.get('/stk', access ,(req,res)=>{
 });
 
 //-----Callback Url ----///
-app.post('/Callbacks',(req,res)=>{
+app.post('/Callbacks',(res,req)=>{
     
     console.log('.......... STK Callback ..................');
     
