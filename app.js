@@ -6,7 +6,8 @@ const http = require('http');
 const https = require('https');
 const app = express();
 const apiCallFromRequest = require('./Request')
-const apiCallFromNode = require('./nodeCalls')
+const apiCallFromNode = require('./nodeCalls');
+const { json } = require('body-parser');
 
 const port = app.listen(process.env.PORT || 3000);
 const urlE = express.urlencoded({ extended: false })
@@ -73,11 +74,12 @@ app.post('/stk', access, urlE ,function(req,res){
             }
 
         },
-       function(error,response,body){
+       (error,response,body)=>{
 
             if(error){
 
                 console.log(error);
+                res.status(404).json(body)
 
             }else{
 
@@ -97,7 +99,7 @@ app.post('/stk_callback',function(res,req){
     
     console.log('.......... STK Callback ..................');
     console.log(req.body);
-    res.send("",req.body);
+    res.status(200).json(body);
 
     })
 
@@ -160,16 +162,6 @@ app.post('/stk/query',access,(req,res)=>{
 
 
 
-app.post('/timeout_url', (req, resp) => {
-    console.log('.......... Timeout ..................')
-    console.log(req.body)
-})
-
-app.post('/result_url', (req, resp) => {
-    console.log('.......... Results..................')
-    console.log(req.body)
-})
-
 
 
 
@@ -179,6 +171,7 @@ app.get('/b2c', access , (req,res)=>{
 
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/processrequest"
     let auth = "Bearer "+ req.access_token
+    let _securityCredetilas = "M2u8U9vXuDaG/aahaOl5vEf1YU0zLvOMX3PxhzS+oqhx/YTm0VFCpjzC+z1fZPbtD2RmbvsWhCoU/uDC2GE1V8lyaLuokRXBZkDYqSF/hkp87vYWLI/lhaazLiCuIrLfV3SxIg/afEmKawLmgSRPw61AJJupvcvR3KVpdgfLBDCvBwifbPetDyHHg3HeQrkiNSEXZbgHuk+VEy0TXhOmG6aPhGvFsHOy/szbBh8xeaU7S/ZuC56n9ZHFMHA1Eime2C9qNIkNU7n2EW6hrEfIFquPJl8co5jcq8PKvWhT3xhPqBbLwLeY8vqyYyVS0T6pMaRgepkvmQdYdVnbh/aeUw=="
 
     request(
         {
@@ -190,14 +183,14 @@ app.get('/b2c', access , (req,res)=>{
             },json:{
         
                 "InitiatorName":"testapi481",
-                "SecurityCredential":"IeLYriOxTaityG/uhB+74NIiZW8blxi5dC89CQRW2pliMYPb36n5E08NT+5fUXk60JHFNi5csrN9dFpE7zbswV9FHf3qhZuNEbuUt1ix6rPk7fIQXe3KQL1BOe0boYd4+nwcv283KzxJ+42A9WdH4j+5RlY7lTeGCzHztw1S1DHcUHGUIfsDHnff3DdjgNHGVlRVW3KuEzO/BfLLx8bDPxa4RNGoFaFaDPj6I235wrze0pZVtz9Nsxdu9ixzqD0boZClM5qX4SKwarsDAyPU09yi7OECPW0mwXs2CPUrychIHn8aTvN3ZxQBAHT1WqtIZsj92HAs9UCRm91AgyiO9A== ",
+                "SecurityCredential":_securityCredetilas,
                 "CommandID":"BusinessPayment",
                 "Amount":"23",
                 "PartyA":"600481",
                 "PartyB":"254708374149",
                 "Remarks":" Salary Payment",
-                "QueueTimeOutURL":"https://mkoba.herokuapp.com/timeout_url",
-                "ResultURL":"https://mkoba.herokuapp.com/result_url",
+                "QueueTimeOutURL":"https://mpesamko.herokuapp.com/timeout_url",
+                "ResultURL":"https://mpesamko.herokuapp.com/result_url",
                 "Occasion":"MpesaApi001 "
 
             }
@@ -216,6 +209,18 @@ app.get('/b2c', access , (req,res)=>{
 
 })
 
+
+app.post('/timeout_url', (req, resp) => {
+    console.log('.......... Timeout ..................')
+    console.log(req.body)
+    res.status(200).json(body);
+})
+
+app.post('/result_url', (req, resp) => {
+    console.log('.......... Results..................')
+    console.log(req.body)
+    res.status(200).json(body);
+})
 
 
 
