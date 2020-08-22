@@ -81,6 +81,7 @@ app.post('/stk', access ,function(req,res){
             }else{
 
                 res.status(200).json(body)
+                res.send(body)
                 console.log(body)
         
             }
