@@ -41,8 +41,8 @@ app.post('/stk', access, urlE ,function(req,res){
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    let _amout = req.body
-    let _phone = req.body
+    let _amout = req.params
+    let _phone = req.params
 
     let _phoneNumber = _phone.PhoneNumber
     let _Amount = _amout.Amount
