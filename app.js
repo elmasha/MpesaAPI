@@ -9,6 +9,7 @@ const apiCallFromRequest = require('./Request')
 const apiCallFromNode = require('./nodeCalls')
 
 const port = app.listen(process.env.PORT || 3000);
+const urlE = express.urlencoded({ extended: false })
 app.use(express.json())
 
 
@@ -32,7 +33,7 @@ app.get('/access_token',access,(req,res)=>{
 })
 
 ///----Stk Push ---//
-app.post('/stk', access ,function(req,res){
+app.post('/stk', access, urlE ,function(req,res){
 
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     let auth = "Bearer "+ req.access_token
