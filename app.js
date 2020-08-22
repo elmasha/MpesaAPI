@@ -168,7 +168,6 @@ app.post('/stk/query',access,(req,res)=>{
 ///-----B2c -----///
 app.post('/b2c', access , function(req,res){
 
-
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
 
     let auth = "Bearer "+ req.access_token,
@@ -192,8 +191,8 @@ app.post('/b2c', access , function(req,res){
                 "PartyA":"600481",
                 "PartyB":"254708374149",
                 "Remarks":" Salary Payment",
-                "QueueTimeOutURL":"https://mpesamko.herokuapp.com/timeout_url",
-                "ResultURL":"https://mpesamko.herokuapp.com/result_url",
+                "QueueTimeOutURL":"http://mpesamko.herokuapp.com/timeout_url",
+                "ResultURL":"http://mpesamko.herokuapp.com/result_url",
                 "Occasion":"MpesaApi001 "
 
             }
@@ -202,6 +201,7 @@ app.post('/b2c', access , function(req,res){
         function(error,response,body){
             if(error){
                 console.log(error);
+                res.status(404);
             }
 
                 res.status(200).json(body)
@@ -216,14 +216,18 @@ app.post('/b2c', access , function(req,res){
 
 app.post('/timeout_url', function(req, res) {
     console.log('.......... Timeout ..................')
-    console.log(req.body)
-    res.status(200).json(req.body);
+    var _body = req.body;
+
+    console.log(_body)
+    res.status(200).json(_body);
 })
 
 app.post('/result_url', function(req, res) {
     console.log('.......... Results..................')
+    var _body = req.body;
+
     console.log(req.body)
-    res.status(200).json(req.body);
+    res.status(200).json(_body);
 })
 
 
