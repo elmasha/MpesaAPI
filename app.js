@@ -40,13 +40,14 @@ app.post('/stk', access, urlencoded ,function(req,res){
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    let _amout = req.body
-    let _phone = req.body
+   
 
-    let _phoneNumber = _phone.PhoneNumber
-    let _Amount = _amout.Amount
+    let _phoneNumber = req.body.phone
+    let _Amount = req.body.amount
 
     //req.PhoneNumber
+
+    console.log("phone",req.body)
       
     const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
     const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
