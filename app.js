@@ -214,13 +214,15 @@ app.post('/b2c', access , function(req,res){
 })
 
 
-app.post('/timeout_url', (req, resp) => {
+app.post('/timeout_url', function(req, res) {
     console.log('.......... Timeout ..................')
+    console.log(req.body)
     res.status(200).json(req.body);
 })
 
-app.post('/result_url', (req, resp) => {
+app.post('/result_url', function(req, res) {
     console.log('.......... Results..................')
+    console.log(req.body)
     res.status(200).json(req.body);
 })
 
