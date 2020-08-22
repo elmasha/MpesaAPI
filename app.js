@@ -108,7 +108,7 @@ app.post('/stk_callback',function(res,req){
 
 
 ///----STK QUERY ---
-app.post('/stk/query',access,(req,res)=>{
+app.post('/stk/query',access, function(req,res){
 
     let checkoutRequestId = req.body.checkoutRequestId
 
