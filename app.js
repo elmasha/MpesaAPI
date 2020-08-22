@@ -16,7 +16,7 @@ app.use(express.json())
 app.get('/', (req, res)=>{
 
 
-res.send("Hello Elmasha Mpesa APi")
+res.send("Hello Mkoba App Elmasha Mpesa APi")
 
 
 })
@@ -39,8 +39,8 @@ app.post('/stk', access ,function(req,res){
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    var _amout = req.Amount
-    var _phoneNumber = req.PhoneNumber
+    let _amout = req.body.Amount
+    let _phoneNumber = req.body.PhoneNumber
       
     const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
     const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
@@ -95,9 +95,8 @@ app.post('/stk', access ,function(req,res){
 app.post('/stk_callback',function(res,req){
     
     console.log('.......... STK Callback ..................');
-    
     console.log(req.body);
-    res.send("");
+    res.send("",req.body);
 
     })
 
