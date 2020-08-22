@@ -61,7 +61,7 @@ app.post('/stk', access ,function(req,res){
                     "Password": password,
                     "Timestamp": timeStamp,
                     "TransactionType": "CustomerPayBillOnline",
-                    "Amount": _amout,
+                    "Amount": "1",
                     "PartyA": "254746291229",
                     "PartyB": "174379",
                     "PhoneNumber": _phoneNumber,
