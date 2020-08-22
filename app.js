@@ -9,8 +9,7 @@ const apiCallFromRequest = require('./Request')
 const apiCallFromNode = require('./nodeCalls')
 
 const port = app.listen(process.env.PORT || 3000);
-
-
+app.use(express.json())
 
 
 //routes
@@ -33,15 +32,15 @@ app.get('/access_token',access,(req,res)=>{
 })
 
 ///----Stk Push ---//
-app.post('/stk', access ,(req,res)=>{
+app.post('/stk', access ,function(req,res){
 
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     let auth = "Bearer "+ req.access_token
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    let _amout = req.body.Amount
-    let _phoneNumber = req.body.PhoneNumber
+    var _amout = req.body.Amount
+    var _phoneNumber = req.body.PhoneNumber
       
     const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
     const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
@@ -66,7 +65,7 @@ app.post('/stk', access ,(req,res)=>{
                     "PartyA": "254746291229",
                     "PartyB": "174379",
                     "PhoneNumber": _phoneNumber,
-                    "CallBackURL": "https://mpesamko.herokuapp.com/Callbacks",
+                    "CallBackURL": "https://mpesamko.herokuapp.com/stk_callback",
                     "AccountReference": " Elmasha TEST",
                     "TransactionDesc": "Lipa na Mpesa"
 
@@ -92,12 +91,12 @@ app.post('/stk', access ,(req,res)=>{
 });
 
 //-----Callback Url ----///
-app.post('/Callbacks',(res,req)=>{
+app.post('/stk_callback',function(res,req){
     
     console.log('.......... STK Callback ..................');
     
-    res.status(200).json(body)
-    console.log(body)
+    console.log(req.body);
+    res.send("");
 
     })
 
