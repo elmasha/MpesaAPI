@@ -26,7 +26,7 @@ res.send("Hello Mkoba App Elmasha Mpesa APi")
 
 
 
-///----Access Token ---
+///----Access Token ---//
 app.get('/access_token',access,(req,res)=>{
 
     res.status(200).json({access_token: req.access_token})
@@ -166,10 +166,10 @@ app.post('/stk/query',access,(req,res)=>{
 
 
 ///-----B2c -----///
-app.get('/b2c', access , (req,res)=>{
+app.get('/b2c', access , function(req,res){
 
 
-    let endpoint = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/processrequest"
+    let endpoint = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
     let auth = "Bearer "+ req.access_token
     let _securityCredetilas = "M2u8U9vXuDaG/aahaOl5vEf1YU0zLvOMX3PxhzS+oqhx/YTm0VFCpjzC+z1fZPbtD2RmbvsWhCoU/uDC2GE1V8lyaLuokRXBZkDYqSF/hkp87vYWLI/lhaazLiCuIrLfV3SxIg/afEmKawLmgSRPw61AJJupvcvR3KVpdgfLBDCvBwifbPetDyHHg3HeQrkiNSEXZbgHuk+VEy0TXhOmG6aPhGvFsHOy/szbBh8xeaU7S/ZuC56n9ZHFMHA1Eime2C9qNIkNU7n2EW6hrEfIFquPJl8co5jcq8PKvWhT3xhPqBbLwLeY8vqyYyVS0T6pMaRgepkvmQdYdVnbh/aeUw=="
 
@@ -180,7 +180,8 @@ app.get('/b2c', access , (req,res)=>{
             headers:{
             "Authorization": auth
                 
-            },json:{
+            },
+            json:{
         
                 "InitiatorName":"testapi481",
                 "SecurityCredential":_securityCredetilas,
@@ -202,6 +203,7 @@ app.get('/b2c', access , (req,res)=>{
             }
 
                 res.status(200).json(body)
+                console.log(body)
 
         }
     )

@@ -4,7 +4,7 @@
   "description": "mpesa daraja api",
   "main": "app.js",
   "scripts": {
-    "start": "app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
