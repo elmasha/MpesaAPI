@@ -99,7 +99,7 @@ app.post('/stk_callback',function(res,req){
     
     console.log('.......... STK Callback ..................');
     console.log(req.body);
-    res.status(200).json(body);
+    res.status(200).json(req.body);
 
     })
 
@@ -214,14 +214,14 @@ app.post('/b2c', access , function(req,res){
 })
 
 
-app.get('/timeout_url', (req, resp) => {
+app.post('/timeout_url', (req, resp) => {
     console.log('.......... Timeout ..................')
-    res.status(200).json(body);
+    res.status(200).json(req.body);
 })
 
-app.get('/result_url', (req, resp) => {
+app.post('/result_url', (req, resp) => {
     console.log('.......... Results..................')
-    res.status(200).json(body);
+    res.status(200).json(req.body);
 })
 
 
