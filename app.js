@@ -42,7 +42,8 @@ app.post('/stk', access, urlE ,function(req,res){
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
     let _amout = req.Amount
-    let _phoneNumber = req.PhoneNumber
+    let _phoneNumber = req.body.PhoneNumber
+    //req.PhoneNumber
       
     const timeStamp = (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, -3);
     const password = Buffer.from(`${_shortCode}${_passKey}${timeStamp}`).toString('base64');
@@ -79,12 +80,10 @@ app.post('/stk', access, urlE ,function(req,res){
             if(error){
 
                 console.log(error);
-                res.status(404).json(body)
 
             }else{
 
                 res.status(200).json(body)
-                res.send(body)
                 console.log(body)
         
             }
@@ -111,7 +110,7 @@ app.post('/stk_callback',function(res,req){
 ///----STK QUERY ---
 app.post('/stk/query',access,(req,res)=>{
 
-    checkoutRequestId='ws_CO_180820201459553317'
+    let checkoutRequestId = req.body.checkoutRequestId
 
     auth = "Bearer "+ req.access_token
 
@@ -149,7 +148,6 @@ app.post('/stk/query',access,(req,res)=>{
             }else if(response == 404){
 
                 console.log("Error Something went wrong..")
-
 
             }else{
                 res.status(200).json(body)
