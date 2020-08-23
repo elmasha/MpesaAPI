@@ -7,10 +7,9 @@ const https = require('https');
 const app = express();
 const apiCallFromRequest = require('./Request')
 const apiCallFromNode = require('./nodeCalls');
-const { json } = require('body-parser');
 
 const port = app.listen(process.env.PORT || 3000);
-const urlE = express.urlencoded({ extended: false })
+const urlencoded = express.urlencoded({ extended: false })
 app.use(express.json())
 
 
@@ -34,15 +33,15 @@ app.get('/access_token',access,(req,res)=>{
 })
 
 ///----Stk Push ---//
-app.post('/stk', access, urlE ,function(req,res){
+app.post('/stk', access, urlencoded ,function(req,res){
 
     let endpoint = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     let auth = "Bearer "+ req.access_token
 
     let _shortCode = '174379';
     let _passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-    let _amout = req.params
-    let _phone = req.params
+    let _amout = req.body
+    let _phone = req.body
 
     let _phoneNumber = _phone.PhoneNumber
     let _Amount = _amout.Amount
@@ -68,7 +67,7 @@ app.post('/stk', access, urlE ,function(req,res){
                     "Password": password,
                     "Timestamp": timeStamp,
                     "TransactionType": "CustomerPayBillOnline",
-                    "Amount": "1",
+                    "Amount": _Amount,
                     "PartyA": "254746291229",
                     "PartyB": "174379",
                     "PhoneNumber": _phoneNumber,
@@ -102,7 +101,8 @@ app.post('/stk_callback',function(res,req){
     
     console.log('.......... STK Callback ..................');
     console.log(req.body);
-    res.status(200).json(req.body);
+    const _data = res.body;
+    res.json(_data);
 
     })
 
@@ -221,7 +221,7 @@ app.post('/timeout_url', function(req, res) {
     var _body = req.body;
 
     console.log(_body)
-    res.status(200).json(_body);
+    res.json(_body);
 })
 
 app.post('/result_url', function(req, res) {
@@ -229,7 +229,7 @@ app.post('/result_url', function(req, res) {
     var _body = req.body;
 
     console.log(req.body)
-    res.status(200).json(_body);
+    res.json(_body);
 })
 
 
